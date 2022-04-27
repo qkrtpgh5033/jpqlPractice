@@ -37,9 +37,7 @@ public class JpaMain {
             member.setAge(10);
             em.persist(member);
 
-            Member member2 = new Member();
-            member2.setUsername("member2");
-            member2.setAge(10);
+
             em.persist(member2);
 
             em.flush();
