@@ -37,8 +37,6 @@ public class JpaMain {
             member.setAge(10);
             em.persist(member);
 
-
-
             em.flush();
             em.clear();
 
