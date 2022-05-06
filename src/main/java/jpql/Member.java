@@ -18,7 +18,14 @@ public class Member {
     @JoinColumn(name = "TEAM_ID")
     private Team team;
 
+    @Enumerated
+    private MemberType type;
+
     private String username;
     private int age;
+
+    public String getTeamName(){
+        return team.getName();
+    }
 
 }

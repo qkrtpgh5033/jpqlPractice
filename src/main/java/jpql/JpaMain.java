@@ -23,27 +23,43 @@ public class JpaMain {
 
         //code
         try{
+            Team teamA = new Team();
+            teamA.setName("TeamA");
+            em.persist(teamA);
 
-            Test test = new Test();
-            test.setTestName("member100");
-            em.persist(test);
+            Team teamB = new Team();
+            teamB.setName("TeamB");
+            em.persist(teamB);
 
-            Test test2 = new Test();
-            test2.setTestName("member2");
-            em.persist(test2);
+            Member member1 = new Member();
+            member1.setUsername("member1");
+            member1.setAge(10);
+            member1.setTeam(teamA);
+            em.persist(member1);
 
-            Member member = new Member();
-            member.setUsername("member1");
-            member.setAge(10);
-            em.persist(member);
+            Member member2 = new Member();
+            member2.setUsername("member2");
+            member2.setAge(20);
+            member2.setTeam(teamB);
+            em.persist(member2);
+
+            Member member3 = new Member();
+            member3.setUsername("member3");
+            member3.setAge(30);
+            member3.setTeam(teamB);
+            em.persist(member3);
+
 
             em.flush();
             em.clear();
 
-            List<Member> resultList = em.createQuery("select m from Member m left join Test t on m.username = t.testName", Member.class)
+            String query = "select t from Team t join fetch t.memberList";
+            List<Team> resultList = em.createQuery(query, Team.class)
                     .getResultList();
 
-            System.out.println("resultList.size() = " + resultList.size());
+            for (Team t : resultList) {
+                System.out.println(t.getName() +" | member : " + t.getMemberList().size());
+            }
 
 
             transaction.commit();
